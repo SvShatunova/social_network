@@ -7,7 +7,7 @@ from .utils import paginator
 
 
 def index(request):
-    posts = Post.objects.all().select_related('author', 'group')
+    posts = Post.objects.select_related('author', 'group')
     page_obj = paginator(request, posts)
     context = {
         'page_obj': page_obj,
@@ -28,18 +28,14 @@ def group_list(request, slug):
 
 def profile(request, username):
     author = get_object_or_404(User, username=username)
-    author_posts = author.posts.all()
-    page_obj = paginator(request, author_posts)
-    if request.user.is_authenticated:
-        following = Follow.objects.filter(
-            user=request.user, author=author
-        ).exists()
-    else:
-        following = False
+    page_obj = paginator(request, author.posts.all())
+    following = request.user.is_authenticated
+    if following:
+        following = author.following.filter(user=request.user).exists()
     context = {
-        'author': author,
         'page_obj': page_obj,
-        'following': following,
+        'author': author,
+        'following': following
     }
     return render(request, 'posts/profile.html', context)
 
