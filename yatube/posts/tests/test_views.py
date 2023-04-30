@@ -191,7 +191,7 @@ class PostViewsTests(TestCase):
     def test_cache_index(self):
         """Кэширования главной страницы."""
         first = self.authorized_client.get(reverse('posts:index'))
-        post = Post.objects.get(pk=1)
+        post = Post.objects.get()
         post.text = 'Измененный текст'
         post.save()
         second = self.authorized_client.get(reverse('posts:index'))

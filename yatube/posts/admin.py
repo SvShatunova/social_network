@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Group, Post
+from .models import Group, Post, Comment, Follow
 
 
 @admin.register(Post)
@@ -30,3 +30,17 @@ class GroupAdmin(admin.ModelAdmin):
     list_display_links = ('pk', 'title',)
     search_fields = ('title',)
     prepopulated_fields = {'slug': ('title',)}
+
+
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ('pk', 'author', 'text', 'created')
+    search_fields = ('author', 'text')
+    empty_value_display = '-пусто-'
+
+
+@admin.register(Follow)
+class FollowAdmin(admin.ModelAdmin):
+    list_display = ('pk', 'user', 'author')
+    search_fields = ('user', 'author')
+    empty_value_display = '-пусто-'
