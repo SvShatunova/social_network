@@ -92,8 +92,7 @@ class PostUrlsTests(TestCase):
 
     def test_unexisting_page_url_exists_at_desired_location(self):
         """Несуществующая страница (ошибка 404)
-        доступна любому пользователю.
-        """
+        доступна любому пользователю."""
         response = self.client.get('/unexisting_page/')
         self.assertEqual(response.status_code, HTTPStatus.NOT_FOUND)
         response = self.authorized_client.get('/unexisting_page/')

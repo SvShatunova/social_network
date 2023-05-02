@@ -1,6 +1,7 @@
 from http import HTTPStatus
 
 from posts.forms import PostForm
+
 from django.conf import settings
 from django.test import Client, TestCase
 from django.urls import reverse
@@ -104,8 +105,7 @@ class PostFormsTests(TestCase):
 
     def test_guest_create_post(self):
         """Проверяем, при создании поста анонимом количество постов
-        в базе данных не изменится.
-        """
+        в базе данных не изменится."""
         posts_count = Post.objects.count()
         form = {
             'text': self.post.text,
